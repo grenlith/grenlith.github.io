@@ -752,36 +752,37 @@ body[class*="dark-ui"] .mde-preview .cm-error {
 <blockquote data-line="3" data-line-end="3">
 <p data-line="3" data-line-end="3">The goal of the <a href="https://tmpout.sh/bggp/3/" data-line="3" data-line-end="3">3rd Annual Binary Golf Grand Prix (BGGP3)</a> is to find the smallest file which will crash (or hang) a specific program.</p>
 </blockquote>
-<h2 data-line="5" data-line-end="5">entries</h2>
-<h3 data-line="6" data-line-end="6">gnu m4</h3>
-<p data-line="7" data-line-end="7">gnu m4 is a macro preprocessing language and tool. it is widely used in open source projects, especially in conjunction with <code>autoconf</code> to prepare source to be compiled on a given system.</p>
-<p data-line="9" data-line-end="9">by defining a recursive macro, we can send it into an infinite loop, which the OS kills</p>
-<p data-line="11" data-line-end="11"><strong data-line="11" data-line-end="11"><a href="3.m4" data-line="11" data-line-end="11">3.m4</a></strong>:</p>
-<pre data-line="12" data-line-end="15"><code>define(`a',`a 3')
+<p data-line="5" data-line-end="5">this document in its original markdown format is available <a href="bggp3.md" data-line="5" data-line-end="5">here</a>.</p>
+<h2 data-line="7" data-line-end="7">entries</h2>
+<h3 data-line="8" data-line-end="8">gnu m4</h3>
+<p data-line="9" data-line-end="9">gnu m4 is a macro processing language and tool. it is widely used in open source projects, especially in conjunction with <code>autoconf</code> to prepare source to be compiled on a given system.</p>
+<p data-line="11" data-line-end="11">by defining a recursive macro, we can send it into an infinite loop, which the OS kills</p>
+<p data-line="13" data-line-end="13"><strong data-line="13" data-line-end="13"><a href="3.m4" data-line="13" data-line-end="13">3.m4</a></strong>:</p>
+<pre data-line="14" data-line-end="17"><code>define(`a',`a 3')
 a.
 </code></pre>
-<p data-line="17" data-line-end="17"><strong data-line="17" data-line-end="17">result</strong>:</p>
-<pre data-line="18" data-line-end="23"><code>$ m4 3.m4
+<p data-line="19" data-line-end="19"><strong data-line="19" data-line-end="19">result</strong>:</p>
+<pre data-line="20" data-line-end="25"><code>$ m4 3.m4
 
 Killed
 $
 </code></pre>
-<h2 data-line="25" data-line-end="25">fuzzing tech</h2>
-<h3 data-line="26" data-line-end="26">afl++</h3>
-<h4 data-line="27" data-line-end="27">non-instrumented</h4>
-<pre data-line="29" data-line-end="31"><code>afl-fuzz -Q -D -i in -o out -- TARGET -FLAGS @@
+<h2 data-line="27" data-line-end="27">fuzzing tech</h2>
+<h3 data-line="28" data-line-end="28">afl++</h3>
+<h4 data-line="29" data-line-end="29">non-instrumented</h4>
+<pre data-line="31" data-line-end="33"><code>afl-fuzz -Q -D -i in -o out -- TARGET -FLAGS @@
 </code></pre>
-<h4 data-line="33" data-line-end="33">instrumented</h4>
-<pre data-line="34" data-line-end="38"><code>./configure CC="afl-gcc" CXX="afl-g++" --disable-shared
+<h4 data-line="35" data-line-end="35">instrumented</h4>
+<pre data-line="36" data-line-end="40"><code>./configure CC="afl-gcc" CXX="afl-g++" --disable-shared
 make
 afl-fuzz -D -i in -o out -- TARGET -FLAGS @@
 </code></pre>
-<h3 data-line="40" data-line-end="40">honggfuzz</h3>
-<h4 data-line="41" data-line-end="41">non-instrumented</h4>
-<pre data-line="43" data-line-end="45"><code>honggfuzz -n NUMTHREADS -i ./inputs/ -x -- TARGET -FLAGS ___FILE___
+<h3 data-line="42" data-line-end="42">honggfuzz</h3>
+<h4 data-line="43" data-line-end="43">non-instrumented</h4>
+<pre data-line="45" data-line-end="47"><code>honggfuzz -n NUMTHREADS -i ./inputs/ -x -- TARGET -FLAGS ___FILE___
 </code></pre>
-<h4 data-line="47" data-line-end="47">instrumented</h4>
-<pre data-line="49" data-line-end="53"><code>./configure CC="hfuzz-gcc" CXX="hfuzz-g++" --disable-shared
+<h4 data-line="49" data-line-end="49">instrumented</h4>
+<pre data-line="51" data-line-end="55"><code>./configure CC="hfuzz-gcc" CXX="hfuzz-g++" --disable-shared
 make
 honggfuzz -n NUMTHREADS -i ./inputs/ -x -- TARGET -FLAGS ___FILE___
 </code></pre></div>
